@@ -2,14 +2,18 @@
 
 {% block content %}
 
-	<center>
 	<h1>Academic Divisions</h1>
 	<br>
-	{% for acad_div in acad_div_list %}
-		<a href="{% url 'show-acad-div' acad_div.id %}">{{ acad_div }}</a> <br>
+	<table class="table table-hover table-bordered table-striped">
 
-	{% endfor %}
+		{% for acad_div in acad_div_list %}
+		<tr>
+			<td>
+				<a href="{% url 'show-acad-div' acad_div.id %}">{{ acad_div }}</a> <br>
+			</td>
+		</tr>
+		{% endfor %}
 
-	</center>
+	</table>
 
 {% endblock %}
