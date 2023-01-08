@@ -19,6 +19,11 @@ def list_acad_divs(request):
 	return render(request, 'labs/acad_div_list.html',
 		{'acad_div_list':acad_div_list})
 
+def show_lab(request, lab_id):
+	lab = Lab.objects.get(pk=lab_id)
+	return render(request, 'labs/lab.html',
+		{'lab':lab})
+
 def all_labs(request):
 	lab_list = Lab.objects.all()
 	return render(request, 'labs/lab_list.html',
