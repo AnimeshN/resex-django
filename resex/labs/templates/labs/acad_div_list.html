@@ -1,0 +1,15 @@
+{% extends "labs/base.html" %}
+
+{% block content %}
+
+	<center>
+	<h1>Academic Divisions</h1>
+	<br>
+	{% for acad_div in acad_div_list %}
+		<a href="{% url 'show-acad-div' acad_div.id %}">{{ acad_div }}</a> <br>
+
+	{% endfor %}
+
+	</center>
+
+{% endblock %}
