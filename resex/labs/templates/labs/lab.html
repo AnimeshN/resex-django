@@ -11,10 +11,11 @@
     <p class="card-text">
     	
 		<strong>Associated Faculty:</strong> {{ lab.faculty }}<br>
-		<strong>Description:</strong> {{ lab.description }}<br>
-		<strong>Website:</strong> {{ lab.web }}<br>
+		<!-- <strong>Website:</strong> {{ lab.web }}<br> -->
 		<strong>Contact:</strong> {{ lab.contact }}<br>
 		<strong>Email:</strong> <a href="mailto:{{ lab.email_address }}">{{ lab.email_address }}</a><br>
+		<strong>Description:</strong> {{ lab.description }}<br>
+		<strong>Research Equipment:</strong> {{ lab.research_equipment }}<br>
 		<strong>People:</strong> 
 		{% for user in lab.associated_users.all %}
 		<br>{{ user }}

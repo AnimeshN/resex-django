@@ -3,11 +3,26 @@ import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
 from .models import Lab, Academic_Division
-from .forms import Academic_Division_Form
+from .forms import Academic_Division_Form, Lab_Form
 from django.http import HttpResponseRedirect
 
 
 # Create your views here.
+
+
+def add_lab(request):
+	submitted = False
+	if request.method == "POST":
+		form = Lab_Form(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/add_lab?submitted=True')
+	else:
+		form = Lab_Form
+		if 'submitted' in request.GET:
+			submitted = True
+
+	return render(request, 'labs/add_lab.html', {'form':form, 'submitted':submitted})
 
 def update_acad_div(request, acad_div_id):
 	acad_div = Academic_Division.objects.get(pk=acad_div_id)

@@ -16,7 +16,7 @@ class Academic_DivisionAdmin(admin.ModelAdmin):
 
 @admin.register(Lab)
 class LabAdmin(admin.ModelAdmin):
-	fields = (('name','academic_division'), ('contact', 'email_address'),('poc_manager','web'),'description', 'faculty', 'associated_users','address')
+	fields = (('name','academic_division'), ('contact', 'email_address'),('poc_manager','web'),'description', 'research_equipment', 'faculty', 'associated_users','address')
 	list_display = ('name', 'academic_division', 'web', 'contact', 'poc_manager')
 	list_filter = ('academic_division','poc_manager')
 	ordering = ('name',)

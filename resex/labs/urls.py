@@ -12,4 +12,5 @@ urlpatterns = [
     path('show_acad_div/<acad_div_id>', views.show_acad_div, name='show-acad-div'),
     path('search_acad_divs',views.search_acad_divs, name="search-acad-divs"),
     path('update_acad_div/<acad_div_id>', views.update_acad_div, name='update-acad-div'),
+    path('add_lab',views.add_lab, name="add-lab"),
 ]
