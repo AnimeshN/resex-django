@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import calendar 
 from calendar import HTMLCalendar
 from datetime import datetime
@@ -8,6 +8,18 @@ from django.http import HttpResponseRedirect
 
 
 # Create your views here.
+
+def update_acad_div(request, acad_div_id):
+	acad_div = Academic_Division.objects.get(pk=acad_div_id)
+	form = Academic_Division_Form(request.POST or None, instance=acad_div)
+	if form.is_valid():
+		form.save()
+		return redirect('list-acad-divs')
+
+	return render(request, 'labs/update_acad_div.html',
+		{'acad_div':acad_div,
+		'form':form})
+
 
 def search_acad_divs(request):
 	if request.method == "POST":

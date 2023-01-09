@@ -10,7 +10,7 @@ class Academic_Division_Form(ModelForm):
 		fields = ('name','acad_div_type', 'web', 'email')
 		labels = {
 			'name': '',
-			'acad_div_type': 'Type  of Academic Division',
+			'acad_div_type': '',
 			'web': '',
 			'email': '',
 		}
