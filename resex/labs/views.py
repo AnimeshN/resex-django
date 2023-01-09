@@ -9,6 +9,19 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 
+def search_acad_divs(request):
+	if request.method == "POST":
+		searched_acad_divs = request.POST.get('searched_acad_divs')
+		acad_divs = Academic_Division.objects.filter(name__contains=searched_acad_divs)
+		
+		return render(request, 'labs/search_acad_divs.html',
+		{'searched_acad_divs':searched_acad_divs,
+		'acad_divs':acad_divs})
+	else:
+		return render(request,'labs/search_acad_divs.html')
+		
+
+
 def show_acad_div(request, acad_div_id):
 	acad_div = Academic_Division.objects.get(pk=acad_div_id)
 	return render(request, 'labs/acad_div.html',
