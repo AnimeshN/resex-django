@@ -15,9 +15,11 @@
 		    </p>
 		    <a href="{{ acad_div.web }}" class="btn btn-primary">Visit Website</a><br>
 		  </div>
-		</div>
-		<br>
-		<a href="{% url 'update-acad-div' acad_div.id %}" 
+		
+		<div class="card-footer text-muted">
+    		<a href="{% url 'update-acad-div' acad_div.id %}" 
 				class="btn btn-outline-secondary btn-sm">Update</a>
+  		</div>	
+  		</div>
 
 {% endblock %}

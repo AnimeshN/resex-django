@@ -9,6 +9,17 @@ from django.http import HttpResponseRedirect
 
 # Create your views here.
 
+def update_lab(request, lab_id):
+	lab = Lab.objects.get(pk=lab_id)
+	form = Lab_Form(request.POST or None, instance=lab)
+	if form.is_valid():
+		form.save()
+		return redirect('list-labs')
+
+	return render(request, 'labs/update_lab.html',
+		{'lab':lab,
+		'form':form})
+
 
 def add_lab(request):
 	submitted = False

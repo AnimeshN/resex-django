@@ -13,4 +13,5 @@ urlpatterns = [
     path('search_acad_divs',views.search_acad_divs, name="search-acad-divs"),
     path('update_acad_div/<acad_div_id>', views.update_acad_div, name='update-acad-div'),
     path('add_lab',views.add_lab, name="add-lab"),
+    path('update_lab/<lab_id>', views.update_lab, name='update-lab'),
 ]

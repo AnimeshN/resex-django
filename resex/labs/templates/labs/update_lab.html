@@ -1,0 +1,17 @@
+{% extends "labs/base.html" %}
+
+{% block content %}
+
+<center>
+	
+	<h1>Update Lab</h1>
+	<br>
+	<form action="" method=POST>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<br>
+		<input type="submit" value="Update" class="btn btn-secondary">
+		
+</center>
+
+{% endblock %}

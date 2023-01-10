@@ -19,10 +19,16 @@
 		<strong>People:</strong> 
 		{% for user in lab.associated_users.all %}
 		<br>{{ user }}
-		{% endfor %}
+		{% endfor %}<br>
+		<strong>Address:</strong> {{lab.address }}<br>
     </p>
     <a href="{{ lab.web }}" class="btn btn-primary">Visit Website</a>
   </div>
+  <div class="card-footer text-muted">
+    <a href="{% url 'update-lab' lab.id %}" 
+				class="btn btn-outline-secondary btn-sm">Update</a>
+  </div>
+
 </div>
 <br><br>
 
