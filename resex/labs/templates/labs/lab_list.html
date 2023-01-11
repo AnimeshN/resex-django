@@ -9,6 +9,12 @@
 			<td>
 				<a href="{% url 'show-lab' lab.id %}">{{ lab }}</a> <br>
 			</td>
+			<td align="right">
+				 <a href="{% url 'update-lab' lab.id %}" 
+				class="btn btn-outline-secondary btn-sm">Update</a> 
+				<a href="{% url 'delete-lab' lab.id %}" 
+				class="btn btn-outline-danger btn-sm">Delete</a> 
+			</td>
 		</tr>
 		
 	{% endfor %}

@@ -4,7 +4,7 @@
 
 <div class="card">
   <div class="card-header">
-    {{ lab.academic_division }}
+    <a href="{% url 'show-acad-div' lab.academic_division.id %}">{{ lab.academic_division }}</a>
   </div>
   <div class="card-body">
     <h3 class="card-title">{{ lab }}</h3>
@@ -26,7 +26,10 @@
   </div>
   <div class="card-footer text-muted">
     <a href="{% url 'update-lab' lab.id %}" 
-				class="btn btn-outline-secondary btn-sm">Update</a>
+				class="btn btn-outline-secondary btn-sm">Update</a> 
+		<a href="{% url 'delete-lab' lab.id %}" 
+				class="btn btn-outline-danger btn-sm">Delete</a> 
+
   </div>
 
 </div>

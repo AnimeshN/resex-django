@@ -14,7 +14,8 @@
 			<td align="right">
 				<a href="{% url 'update-acad-div' acad_div.id %}" 
 				class="btn btn-outline-secondary btn-sm">Update</a>
-			</td>
+				<a href="{% url 'delete-acad-div' acad_div.id %}" 
+				class="btn btn-outline-danger btn-sm">Delete</a>
 			</td>
 		</tr>
 		{% endfor %}

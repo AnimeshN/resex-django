@@ -5,9 +5,48 @@ from datetime import datetime
 from .models import Lab, Academic_Division
 from .forms import Academic_Division_Form, Lab_Form
 from django.http import HttpResponseRedirect
-
+from django.http import HttpResponse
+import csv
 
 # Create your views here.
+
+# Generate a csv file lab list
+def lab_csv(request):
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename=labs.csv'
+
+	# Create a CSV writer
+	writer = csv.writer(response)
+
+	# Designate the model
+	labs = Lab.objects.all().order_by('name')
+
+	# Add column headings to the csv file
+	writer.writerow(['Lab Name', 'Academic Division', 'Associated Faculty', 'Contact', 'Description', 'Research Equipment', 'Website', 'Email', 'Associated Users', 'Address', 'Point of Contact/Manager'])
+
+
+	# Loop through and output
+	for lab in labs:
+		writer.writerow([lab.name, lab.academic_division, lab.faculty, lab.contact, lab.description, lab.research_equipment, lab.web, lab.email_address, lab.associated_users, lab.address, lab.poc_manager])
+	
+	return response
+
+
+
+# Delete a Academic Division
+def delete_acad_div(request,acad_div_id):
+	acad_div = Academic_Division.objects.get(pk=acad_div_id)
+	acad_div.delete()
+
+	return redirect('list-acad-divs')
+
+# Delete a Lab
+def delete_lab(request,lab_id):
+	lab = Lab.objects.get(pk=lab_id)
+	lab.delete()
+
+	return redirect('list-labs')
+
 
 def update_lab(request, lab_id):
 	lab = Lab.objects.get(pk=lab_id)
@@ -66,7 +105,7 @@ def show_acad_div(request, acad_div_id):
 		{'acad_div':acad_div})
 
 def list_acad_divs(request):
-	acad_div_list = Academic_Division.objects.all()
+	acad_div_list = Academic_Division.objects.all().order_by('name')
 	return render(request, 'labs/acad_div_list.html',
 		{'acad_div_list':acad_div_list})
 
@@ -76,7 +115,7 @@ def show_lab(request, lab_id):
 		{'lab':lab})
 
 def all_labs(request):
-	lab_list = Lab.objects.all()
+	lab_list = Lab.objects.all().order_by('name','academic_division')
 	return render(request, 'labs/lab_list.html',
 		{'lab_list':lab_list})
 

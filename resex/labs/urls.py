@@ -3,6 +3,9 @@ from . import views
 
 
 urlpatterns = [
+
+    #UUID: Universally Unique Identifier
+
     path('', views.home, name="home"),
     path('<int:year>/<str:month>/', views.home, name="home"), #path converters <>
     path('labs',views.all_labs, name="list-labs"),
@@ -14,4 +17,7 @@ urlpatterns = [
     path('update_acad_div/<acad_div_id>', views.update_acad_div, name='update-acad-div'),
     path('add_lab',views.add_lab, name="add-lab"),
     path('update_lab/<lab_id>', views.update_lab, name='update-lab'),
+    path('delete_lab/<lab_id>', views.delete_lab, name='delete-lab'),
+    path('delete_acad_div/<acad_div_id>', views.delete_acad_div, name='delete-acad-div'),
+    path('lab_csv', views.lab_csv, name='lab-csv'),
 ]
