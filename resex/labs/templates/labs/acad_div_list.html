@@ -6,7 +6,7 @@
 	<br>
 	<table class="table table-hover table-bordered table-striped">
 
-		{% for acad_div in acad_div_list %}
+		{% for acad_div in acad_divs %}
 		<tr>
 			<td>
 				<a href="{% url 'show-acad-div' acad_div.id %}">{{ acad_div }}</a>
@@ -21,5 +21,37 @@
 		{% endfor %}
 
 	</table>
+<br><br>
+	<hr><br><br>
 
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+	{% if acad_divs.has_previous %}
+		<li class="page-item"><a class="page-link" href="?page=1">&laquo</a></li>
+		<li class="page-item"><a class="page-link" href="?page={{ acad_divs.previous_page_number }}"> Prev</a></li>
+	{% elif not acad_divs.has_previous %}
+			 <li class="page-item disabled"><a class="page-link" href="#">&laquo</a></li>
+            <li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+	{% endif %}
+
+	<!-- <li class="page-item disabled"><a class="page-link" href="#">Page {{ acad_divs.number }} of {{ acad_divs.paginator.num_pages }}</a></li> -->
+
+
+	{% for i in nums %}
+	<li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+	{% endfor %}
+
+
+	{% if acad_divs.has_next %}	
+	<li class="page-item"><a class="page-link" href="?page={{ acad_divs.next_page_number }}">Next</a></li>
+	<li class="page-item"><a class="page-link" href="?page={{ acad_divs.paginator.num_pages }}">&raquo</a></li>
+
+	{% elif not acad_divs.has_next %}
+			 <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+            <li class="page-item disabled"><a class="page-link" href="#">&raquo</a></li>
+	
+	{% endif %}
+  </ul>
+</nav>
 {% endblock %}

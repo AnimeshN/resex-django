@@ -7,6 +7,11 @@ from .forms import Academic_Division_Form, Lab_Form
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 import csv
+from django.core.paginator import Paginator
+
+
+LABS_PER_PAGE = 1
+AD_PER_PAGE = 1
 
 # Create your views here.
 
@@ -105,9 +110,19 @@ def show_acad_div(request, acad_div_id):
 		{'acad_div':acad_div})
 
 def list_acad_divs(request):
-	acad_div_list = Academic_Division.objects.all().order_by('name')
+	# Setup pagination
+	pag = Paginator(Academic_Division.objects.all().order_by('name'), AD_PER_PAGE)
+	page =request.GET.get('page')
+	acad_divs = pag.get_page(page)
+	nums = "a"*acad_divs.paginator.num_pages
+
+	return render(request, 'labs/acad_div_list.html',
+		{'acad_divs':acad_divs,
+		'nums':nums})
+
 	return render(request, 'labs/acad_div_list.html',
 		{'acad_div_list':acad_div_list})
+
 
 def show_lab(request, lab_id):
 	lab = Lab.objects.get(pk=lab_id)
@@ -115,9 +130,15 @@ def show_lab(request, lab_id):
 		{'lab':lab})
 
 def all_labs(request):
-	lab_list = Lab.objects.all().order_by('name','academic_division')
+	# Setup pagination
+	pag = Paginator(Lab.objects.all().order_by('name'), LABS_PER_PAGE)
+	page =request.GET.get('page')
+	labs = pag.get_page(page)
+	nums = "a"*labs.paginator.num_pages
+
 	return render(request, 'labs/lab_list.html',
-		{'lab_list':lab_list})
+		{'labs':labs,
+		'nums':nums})
 
 
 def home(request, year=datetime.now().year, month=datetime.now().strftime("%B")):

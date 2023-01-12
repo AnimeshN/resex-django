@@ -4,7 +4,7 @@
 
 	<h1>Labs</h1><br>
 	<table class="table table-hover table-bordered table-striped">
-	{% for lab in lab_list %}
+	{% for lab in labs %}
 	<tr>
 			<td>
 				<a href="{% url 'show-lab' lab.id %}">{{ lab }}</a> <br>
@@ -18,6 +18,40 @@
 		</tr>
 		
 	{% endfor %}
+	</table>
+	<br><br>
+	<hr><br><br>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+	{% if labs.has_previous %}
+		<li class="page-item"><a class="page-link" href="?page=1">&laquo</a></li>
+		<li class="page-item"><a class="page-link" href="?page={{ labs.previous_page_number }}"> Prev</a></li>
+	{% elif not labs.has_previous %}
+			 <li class="page-item disabled"><a class="page-link" href="#">&laquo</a></li>
+            <li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+	{% endif %}
+
+	<!-- <li class="page-item disabled"><a class="page-link" href="#">Page {{ labs.number }} of {{ labs.paginator.num_pages }}</a></li> -->
+
+
+	{% for i in nums %}
+	<li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+	{% endfor %}
+
+
+	{% if labs.has_next %}	
+	<li class="page-item"><a class="page-link" href="?page={{ labs.next_page_number }}">Next</a></li>
+	<li class="page-item"><a class="page-link" href="?page={{ labs.paginator.num_pages }}">&raquo</a></li>
+
+	{% elif not labs.has_next %}
+			 <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+            <li class="page-item disabled"><a class="page-link" href="#">&raquo</a></li>
+	
+	{% endif %}
+  </ul>
+</nav>
 
 {% endblock %}
 
