@@ -10,8 +10,8 @@ import csv
 from django.core.paginator import Paginator
 
 
-LABS_PER_PAGE = 1
-AD_PER_PAGE = 1
+LABS_PER_PAGE = 2
+AD_PER_PAGE = 2
 
 # Create your views here.
 
