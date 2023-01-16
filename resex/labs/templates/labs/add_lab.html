@@ -1,7 +1,9 @@
 {% extends "labs/base.html" %}
 
 {% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">
 		<center>
+		
 		<h1>Add lab to the Database</h1>
 		</center>
 		<br><br>
@@ -17,10 +19,9 @@
 				{{ form.as_p }}
 				<center>
 					<input type="submit" value="Submit" class="btn btn-secondary">
-				</center>
-				
+		</center>		
 			</form>
-
+		</div>
 		{% endif %}
  <br><br>
 {% endblock %}
