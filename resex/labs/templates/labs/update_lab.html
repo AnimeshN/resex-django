@@ -1,17 +1,23 @@
 {% extends "labs/base.html" %}
 
 {% block content %}
-
-<center>
-	
-	<h1>Update Lab</h1>
-	<br>
-	<form action="" method=POST>
-		{% csrf_token %}
-		{{ form.as_p }}
-		<br>
-		<input type="submit" value="Update" class="btn btn-secondary">
+{% if user.is_authenticated %}
+	<center>
 		
-</center>
+		<h1>Update Lab</h1>
+		<br>
+		<form action="" method=POST>
+			{% csrf_token %}
+			{{ form.as_p }}
+			<br>
+			<input type="submit" value="Update" class="btn btn-secondary">
+			
+	</center>
+{% else %}
+
+	<h3>You must be logged in to view this page...</h3>
+		<a href="{% url 'login' %}">Login here</a>
+
+{% endif %}
 
 {% endblock %}

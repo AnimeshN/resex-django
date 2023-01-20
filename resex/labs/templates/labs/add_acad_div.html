@@ -2,6 +2,7 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
 	<center>
 	<div class="shadow p-4 mb-5 bg-body rounded">
 		<h1>Add Academic Division to the Database</h1>
@@ -21,5 +22,11 @@
 		{% endif %}
 	</div>
 	</center>
+{% else %}
+	<h3>You must be logged in to view this page...</h3>
+	<a href="{% url 'login' %}">Login here</a>
+
+{% endif %}
+
 
 {% endblock %}

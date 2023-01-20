@@ -8,7 +8,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' '2022' 'June'%}">About</a>
+          <a class="nav-link" href="{% url 'home' %}">About</a>
         </li>
 
         <li class="nav-item">
@@ -26,8 +26,10 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'add-lab' %}">Add Lab</a></li>
             <li><a class="dropdown-item" href="{% url 'add-acad-div' %}">Add Academic Division</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'lab-csv' %}">Download labs csv file</a></li>
+            {% if user.is_authenticated %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'lab-csv' %}">Download labs csv file</a></li>
+            {% endif %}
           </ul>
         </li>
 

@@ -15,13 +15,14 @@
 		    </p>
 		    <a href="{{ acad_div.web }}" class="btn btn-primary">Visit Website</a><br>
 		  </div>
-		
-		<div class="card-footer text-muted">
-    		<a href="{% url 'update-acad-div' acad_div.id %}" 
-				class="btn btn-outline-secondary btn-sm">Update</a>
-				<a href="{% url 'delete-acad-div' acad_div.id %}" 
-				class="btn btn-outline-danger btn-sm">Delete</a>
-  		</div>	
+		{% if user.is_authenticated %}
+			<div class="card-footer text-muted">
+	    		<a href="{% url 'update-acad-div' acad_div.id %}" 
+					class="btn btn-outline-secondary btn-sm">Update</a>
+					<a href="{% url 'delete-acad-div' acad_div.id %}" 
+					class="btn btn-outline-danger btn-sm">Delete</a>
+	  		</div>
+  		{% endif %}	
   		</div>
 
 {% endblock %}
