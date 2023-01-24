@@ -1,13 +1,15 @@
 {% extends "labs/base.html" %}
 
 {% block content %}
-
+	
+	{% if user.is_authenticated %}
 	<center>
-		<h1>Hello {{ name }}! Labs for {{ month }} {{ year }}</h1><br>
+		<h1>Hello {{ user.first_name }}! Labs for {{ month }} {{ year }}</h1><br>
 		As of {{ time }}<br>
 		{{ cal|safe }}
-		<br><br><br>
-		Copyright (c) {{ current_year }}
+		
 	</center>
-
+	{% endif %}
+	<br><br><br>
+	<center>Copyright (c) {{ current_year }}</center>
 {% endblock %}

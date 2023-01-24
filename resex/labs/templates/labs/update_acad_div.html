@@ -2,17 +2,30 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-	<center>
-		
-		<h1>Update Academic Division</h1>
-		<br>
-		<form action="" method=POST>
-			{% csrf_token %}
-			{{ form.as_p }}
-			<br>
-			<input type="submit" value="Update" class="btn btn-secondary">
+	{% if user.is_superuser %}
+		<center>
 			
-	</center>
+			<h1>Update Academic Division</h1>
+			<br>
+			<form action="" method=POST>
+				{% csrf_token %}
+				{{ form.as_p }}
+				<br>
+				<input type="submit" value="Update" class="btn btn-secondary">
+				
+		</center>
+	{% else %}
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	         	<h4> Access Denied </h4>
+			<p>Only admin can update an academic division...</p>
+
+			Logged In User: {{ user }}
+			<br/>
+	          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	          </div>
+		
+	{% endif %}
+
 {% else %}
 
 	<h3>You must be logged in to view this page...</h3>

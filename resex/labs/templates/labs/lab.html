@@ -26,12 +26,14 @@
   </div>
 
   {% if user.is_authenticated %}
-	  <div class="card-footer text-muted">
-	    <a href="{% url 'update-lab' lab.id %}" 
-					class="btn btn-outline-secondary btn-sm">Update</a> 
-			<a href="{% url 'delete-lab' lab.id %}" 
-					class="btn btn-outline-danger btn-sm">Delete</a> 
-	  </div>
+	  {% if user == lab.poc_manager or user.is_superuser %}
+		  <div class="card-footer text-muted">
+		    <a href="{% url 'update-lab' lab.id %}" 
+						class="btn btn-outline-secondary btn-sm">Update</a> 
+				<a href="{% url 'delete-lab' lab.id %}" 
+						class="btn btn-outline-danger btn-sm">Delete</a> 
+		  </div>
+	  {% endif %}
   {% endif %}
 </div>
 <br><br>

@@ -10,12 +10,16 @@
 				<a href="{% url 'show-lab' lab.id %}">{{ lab }}</a> <br>
 			</td>
 			{% if user.is_authenticated %}
-				<td align="right">
-					 <a href="{% url 'update-lab' lab.id %}" 
-					class="btn btn-outline-secondary btn-sm">Update</a> 
-					<a href="{% url 'delete-lab' lab.id %}" 
-					class="btn btn-outline-danger btn-sm">Delete</a> 
-				</td>
+				{% if user == lab.poc_manager or user.is_superuser %}
+					<td align="right">
+						 <a href="{% url 'update-lab' lab.id %}" 
+						class="btn btn-outline-secondary btn-sm">Update</a> 
+						<a href="{% url 'delete-lab' lab.id %}" 
+						class="btn btn-outline-danger btn-sm">Delete</a> 
+					</td>
+					{% endif %}
+				{% else %}
+					<td></td>
 			{% endif %}
 		</tr>
 		
@@ -56,5 +60,3 @@
 </nav>
 
 {% endblock %}
-
-

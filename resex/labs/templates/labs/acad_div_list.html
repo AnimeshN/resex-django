@@ -12,12 +12,14 @@
 				<a href="{% url 'show-acad-div' acad_div.id %}">{{ acad_div }}</a>
 			</td>
 			{% if user.is_authenticated %}
-				<td align="right">
-					<a href="{% url 'update-acad-div' acad_div.id %}" 
-					class="btn btn-outline-secondary btn-sm">Update</a>
-					<a href="{% url 'delete-acad-div' acad_div.id %}" 
-					class="btn btn-outline-danger btn-sm">Delete</a>
-				</td>
+				{% if user.is_superuser %}
+					<td align="right">
+						<a href="{% url 'update-acad-div' acad_div.id %}"
+						class="btn btn-outline-secondary btn-sm">Update</a>
+						<a href="{% url 'delete-acad-div' acad_div.id %}" 
+						class="btn btn-outline-danger btn-sm">Delete</a>
+					</td>
+				{% endif %}
 			{% endif %}
 		</tr>
 		{% endfor %}

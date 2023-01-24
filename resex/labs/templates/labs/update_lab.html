@@ -2,17 +2,35 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-	<center>
-		
-		<h1>Update Lab</h1>
-		<br>
-		<form action="" method=POST>
-			{% csrf_token %}
-			{{ form.as_p }}
-			<br>
-			<input type="submit" value="Update" class="btn btn-secondary">
+
+	{% if user == lab.poc_manager or user.is_superuser %}
+
+		<center>
 			
-	</center>
+			<h1>Update Lab</h1>
+			<br>
+			<form action="" method=POST>
+				{% csrf_token %}
+				{{ form.as_p }}
+				<br>
+				<input type="submit" value="Update" class="btn btn-secondary">
+				
+		</center>
+
+	{% else %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+         	<h4> Access Denied </h4>
+		<p>Only the lab's PoC or admin can update this lab...</p>
+
+		Logged In User: {{ user }}
+		<br/>
+		PoC: {{ lab.poc_manager }}
+		<br/>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+		
+	{% endif %}
+
 {% else %}
 
 	<h3>You must be logged in to view this page...</h3>
