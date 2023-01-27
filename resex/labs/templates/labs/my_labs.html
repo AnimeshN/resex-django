@@ -1,0 +1,35 @@
+{% extends "labs/base.html" %}
+
+{% block content %}
+	
+	{% if user.is_authenticated %}
+
+		<h2>My Labs</h2><br>
+		<table class="table table-hover table-bordered table-striped">
+		<tr>
+    		<th align="left">Lab</th>
+    		<th align="left" width= 450>Department</th>
+    		<th align="left">Options</th>
+		</tr>
+	{% for lab in labs %}
+	<tr>
+			<td>
+				<a href="{% url 'show-lab' lab.id %}">{{ lab }}</a> <br>
+			</td>
+			<td>
+				 <a href="{% url 'show-acad-div' lab.academic_division.id %}">{{ lab.academic_division }}</a>
+			</td>
+					<td align="right" width="147">
+						 <a href="{% url 'update-lab' lab.id %}" 
+						class="btn btn-outline-secondary btn-sm">Update</a> 
+						<a href="{% url 'delete-lab' lab.id %}" 
+						class="btn btn-outline-danger btn-sm">Delete</a> 
+					</td>
+		</tr>
+		
+	{% endfor %}
+	</table>
+
+	{% endif %}
+
+{% endblock %}

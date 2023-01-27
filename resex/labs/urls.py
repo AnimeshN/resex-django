@@ -21,4 +21,5 @@ urlpatterns = [
     path('delete_lab/<lab_id>', views.delete_lab, name='delete-lab'),
     path('delete_acad_div/<acad_div_id>', views.delete_acad_div, name='delete-acad-div'),
     path('lab_csv', views.lab_csv, name='lab-csv'),
+    path('my_labs', views.my_labs, name='my-labs'),
 ]

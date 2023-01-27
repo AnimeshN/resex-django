@@ -15,6 +15,14 @@ LABS_PER_PAGE = 10
 AD_PER_PAGE = 10
 
 # Create your views here.
+def my_labs(request):
+	if request.user.is_authenticated:
+		labs =  Lab.objects.filter(poc_manager=request.user).order_by('academic_division__name','name')
+		return render(request, 'labs/my_labs.html', {'labs':labs})
+	else:
+		messages.success(request, ("You are not authorized to view this page."))
+		return redirect('home')
+
 
 # Generate a csv file lab list
 def lab_csv(request):
@@ -157,7 +165,7 @@ def show_lab(request, lab_id):
 
 def all_labs(request):
 	# Setup pagination
-	pag = Paginator(Lab.objects.all().order_by('name'), LABS_PER_PAGE)
+	pag = Paginator(Lab.objects.all().order_by('academic_division__name','name'), LABS_PER_PAGE)
 	page =request.GET.get('page')
 	labs = pag.get_page(page)
 	nums = "a"*labs.paginator.num_pages
