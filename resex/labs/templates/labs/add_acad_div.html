@@ -2,28 +2,28 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
-	<center>
-	<div class="shadow p-4 mb-5 bg-body rounded">
-		<h1>Add Academic Division to the Database</h1>
-		<br>
-		{% if submitted %}
-			Your Academic Division was Submitted Successfully!
+{% if user.is_superuser %}
 
-		{% else %}
-		
-			<form action="" method=POST>
-				{% csrf_token %}
-				{{ form.as_p }}
-				<input type="submit" value="Submit" class="btn btn-secondary">
+		<center>
+		<div class="shadow p-4 mb-5 bg-body rounded">
+			<h1>Add Academic Division to the Database</h1>
+			<br>
+			{% if submitted %}
+				Your Academic Division was Submitted Successfully!
 
-			</form>
+			{% else %}
+			
+				<form action="" method=POST>
+					{% csrf_token %}
+					{{ form.as_p }}
+					<input type="submit" value="Submit" class="btn btn-secondary">
 
+				</form>
 		{% endif %}
 	</div>
 	</center>
 {% else %}
-	<h3>You must be logged in to view this page...</h3>
+	<h3>You must be logged in as admin view this page...</h3>
 	<a href="{% url 'login' %}">Login here</a>
 
 {% endif %}

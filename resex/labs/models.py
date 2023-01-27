@@ -40,7 +40,7 @@ class Lab(models.Model):
 	email_address = models.EmailField('Email Address', max_length=128, blank=True)
 	associated_users = models.ManyToManyField(ResExUser, blank=True) 
 	address = models.CharField('Address', max_length=256, blank=True)
-	poc_manager = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+	poc_manager = models.ForeignKey(User, blank=False, null=True, on_delete=models.SET_NULL)
 
 	# Below part allows you to access DB from admin page
 	def __str__(self):

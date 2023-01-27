@@ -7,6 +7,7 @@ urlpatterns = [
     #UUID: Universally Unique Identifier
 
     path('', views.home, name="home"),
+    path('about', views.about, name="about"),
     path('<int:year>/<str:month>/', views.home, name="home"), #path converters <>
     path('labs',views.all_labs, name="list-labs"),
     path('show_lab/<lab_id>',views.show_lab, name="show-lab"),

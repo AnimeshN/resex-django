@@ -23,7 +23,8 @@ class Academic_Division_Form(ModelForm):
 			'email': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Email ID'}),
 		}
 
-class Lab_Form(ModelForm):
+# Admin Super user Form
+class Lab_Form_Admin(ModelForm):
 	class Meta:
 		model = Lab
 		# fields = "__all__"
@@ -37,7 +38,7 @@ class Lab_Form(ModelForm):
 			'email_address': '',
 			'associated_users':'Associated Users',
 			'address': '',
-			'poc_manager': 'PoC Manager',
+            'poc_manager': 'PoC',
 			'description': '',
 			'research_equipment': '',
 		}
@@ -52,6 +53,38 @@ class Lab_Form(ModelForm):
 			'associated_users': forms.SelectMultiple(attrs={'class':'form-select', 'placeholder':'associated_users'}),
 			'address': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address'}),
 			'poc_manager': forms.Select(attrs={'class':'form-select', 'placeholder':'PoC manager'}),
+			'description': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Description'}),
+			'research_equipment': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Research Equipment'}),
+		}
+# User Event Form
+class Lab_Form(ModelForm):
+	class Meta:
+		model = Lab
+		# fields = "__all__"
+		fields = ('name','academic_division','faculty', 'contact','web', 'email_address',  'associated_users', 'address', 'description','research_equipment')
+		labels = {
+			'name': '',
+			'academic_division': 'Academic Division',
+			'faculty': '',
+			'contact': '',
+			'web': '',
+			'email_address': '',
+			'associated_users':'Associated Users',
+			'address': '',
+			'description': '',
+			'research_equipment': '',
+		}
+
+		widgets = {
+			'name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Name'}),
+			'academic_division': forms.Select(attrs={'class':'form-select', 'placeholder':'Academic Division'}),
+			'faculty': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Associated Faculty'}),
+			'contact': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Contact'}),
+			'web': forms.URLInput(attrs={'class':'form-control', 'placeholder':'Website Address'}),
+			'email_address': forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Email ID'}),
+			'associated_users': forms.SelectMultiple(attrs={'class':'form-select', 'placeholder':'associated_users'}),
+			'address': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address'}),
+			# 'poc_manager': forms.Select(attrs={'class':'form-select', 'placeholder':'PoC manager'}),
 			'description': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Description'}),
 			'research_equipment': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Research Equipment'}),
 		}

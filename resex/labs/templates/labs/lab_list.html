@@ -11,15 +11,13 @@
 			</td>
 			{% if user.is_authenticated %}
 				{% if user == lab.poc_manager or user.is_superuser %}
-					<td align="right">
+					<td align="right" width="147">
 						 <a href="{% url 'update-lab' lab.id %}" 
 						class="btn btn-outline-secondary btn-sm">Update</a> 
 						<a href="{% url 'delete-lab' lab.id %}" 
 						class="btn btn-outline-danger btn-sm">Delete</a> 
 					</td>
 					{% endif %}
-				{% else %}
-					<td></td>
 			{% endif %}
 		</tr>
 		

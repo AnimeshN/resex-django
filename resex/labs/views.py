@@ -3,15 +3,16 @@ import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
 from .models import Lab, Academic_Division
-from .forms import Academic_Division_Form, Lab_Form
+from .forms import Academic_Division_Form, Lab_Form, Lab_Form_Admin
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
+from django.contrib import messages
 import csv
 from django.core.paginator import Paginator
 
 
-LABS_PER_PAGE = 2
-AD_PER_PAGE = 2
+LABS_PER_PAGE = 10
+AD_PER_PAGE = 10
 
 # Create your views here.
 
@@ -40,17 +41,29 @@ def lab_csv(request):
 
 # Delete a Academic Division
 def delete_acad_div(request,acad_div_id):
-	acad_div = Academic_Division.objects.get(pk=acad_div_id)
-	acad_div.delete()
+	if request.user.is_superuser:
+		acad_div = Academic_Division.objects.get(pk=acad_div_id)
+		acad_div.delete()
+		messages.success(request, ("Academic Division was deleted!"))
+		return redirect('list-acad-divs')
+	else:
+		messages.success(request, ("You are not authorized to delete an Academic Division"))
+		return redirect('list-acad-divs')
 
-	return redirect('list-acad-divs')
+
+	
 
 # Delete a Lab
 def delete_lab(request,lab_id):
 	lab = Lab.objects.get(pk=lab_id)
-	lab.delete()
+	if request.user == lab.poc_manager or request.user.is_superuser:
+		lab.delete()
+		messages.success(request, ("Lab was deleted!"))
+		return redirect('list-labs')
+	else:
+		messages.success(request, ("You are not authorized to delete the Lab."))
+		return redirect('list-labs')
 
-	return redirect('list-labs')
 
 
 def update_lab(request, lab_id):
@@ -68,12 +81,25 @@ def update_lab(request, lab_id):
 def add_lab(request):
 	submitted = False
 	if request.method == "POST":
-		form = Lab_Form(request.POST)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/add_lab?submitted=True')
+		
+		if request.user.is_superuser:
+			form = Lab_Form_Admin(request.POST)
+			if form.is_valid():
+				form.save()
+				return HttpResponseRedirect('/add_lab?submitted=True')
+		else:
+			form = Lab_Form(request.POST)
+			if form.is_valid():
+				lab = form.save(commit=False)
+				lab.poc_manager = request.user  # Logged in user
+				lab.save()
+				return HttpResponseRedirect('/add_lab?submitted=True')
+
 	else:
-		form = Lab_Form
+		if request.user.is_superuser:
+			form = Lab_Form_Admin
+		else:
+			form = Lab_Form   
 		if 'submitted' in request.GET:
 			submitted = True
 
@@ -142,7 +168,6 @@ def all_labs(request):
 
 
 def home(request, year=datetime.now().year, month=datetime.now().strftime("%B")):
-	name="Yash"
 	# Convert month from name to number
 	month = month.capitalize() 
 	month_number = list(calendar.month_name).index(month)
@@ -160,7 +185,6 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime("%B"))
 
 	return render(request, 
 		'labs/home.html', {
-		"name" : name, 
 		"year" : year,
 		"month" : month,
 		"month_number" : month_number,
@@ -168,6 +192,10 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime("%B"))
 		"current_year" : current_year,
 		"time" : time,
 		})
+
+def about(request):
+	return render(request, 
+		'labs/about.html', {})
 
 def add_acad_div(request):
 	submitted = False

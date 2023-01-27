@@ -20,6 +20,8 @@
 		{% for user in lab.associated_users.all %}
 		<br>{{ user }}
 		{% endfor %}<br>
+		<strong>PoC:</strong> {{ lab.poc_manager }}<br>
+		<strong>PoC email:</strong> {{ lab.poc_manager.email }}<br>
 		<strong>Address:</strong> {{lab.address }}<br>
     </p>
     <a href="{{ lab.web }}" class="btn btn-primary">Visit Website</a>
