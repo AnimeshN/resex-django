@@ -15,21 +15,16 @@
           <a class="nav-link" href="{% url 'list-labs' %}">Labs</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'list-acad-divs' %}">Academic Divisions</a>
-        </li>
-
-         <li class="nav-item dropdown">
+       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Data
+            Academic Divisions
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'add-lab' %}">Add Lab</a></li>
+              <li><a class="dropdown-item" href="{% url 'list-acad-divs' %}">All Academic Divisions</a></li>
+               {% if user.is_superuser %}
             <li><a class="dropdown-item" href="{% url 'add-acad-div' %}">Add Academic Division</a></li>
-            {% if user.is_authenticated %}
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'lab-csv' %}">Download labs csv file</a></li>
-            {% endif %}
+            {% endif %}     
+              <li><a class="dropdown-item" href="{% url 'search-acad-divs' %}">Search</a></li>
           </ul>
         </li>
 
@@ -40,8 +35,13 @@
           <ul class="dropdown-menu">
             {% if user.is_authenticated %}
 
-              <li><a class="dropdown-item" href="{% url 'my-labs' %}">My Labs</a></li>
-             
+              <li><a class="dropdown-item" href="{% url 'my-labs' %}">My Labs</a></li>      
+              <li><a class="dropdown-item" href="{% url 'add-lab' %}">Add Lab</a></li>
+              {% if user.is_superuser %}
+            <li><a class="dropdown-item" href="{% url 'add-acad-div' %}">Add Academic Division</a></li>
+              <li><a class="dropdown-item" href="{% url 'lab-csv' %}">Download labs csv file</a></li>
+              {% endif %}
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             {% else %}
               <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
@@ -52,14 +52,13 @@
         </li>
 
 
-       
-
       </ul>
-      <form class="d-flex" method=POST action="{% url 'search-acad-divs' %}">
+      <form class="d-flex" method=POST action="{% url 'search-labs' %}">
         {% csrf_token %}
-        <input class="form-control me-2" type="search" placeholder="Search academic divisions" aria-label="Search" name="searched_acad_divs">
+        <input class="form-control me-2" type="search" placeholder="Search Labs" aria-label="Search" name="searched_labs">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+
     </div>
   </div>
 </nav>

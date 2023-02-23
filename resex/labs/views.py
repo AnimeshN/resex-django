@@ -17,7 +17,10 @@ AD_PER_PAGE = 10
 # Create your views here.
 def my_labs(request):
 	if request.user.is_authenticated:
-		labs =  Lab.objects.filter(poc_manager=request.user).order_by('academic_division__name','name')
+		if request.user.is_superuser:
+			labs = Lab.objects.all().order_by('academic_division__name','name')
+		else:
+			labs =  Lab.objects.filter(poc_manager=request.user).order_by('academic_division__name','name')
 		return render(request, 'labs/my_labs.html', {'labs':labs})
 	else:
 		messages.success(request, ("You are not authorized to view this page."))
@@ -26,25 +29,27 @@ def my_labs(request):
 
 # Generate a csv file lab list
 def lab_csv(request):
-	response = HttpResponse(content_type='text/csv')
-	response['Content-Disposition'] = 'attachment; filename=labs.csv'
+	if request.user.is_authenticated:
+		response = HttpResponse(content_type='text/csv')
+		response['Content-Disposition'] = 'attachment; filename=labs.csv'
 
-	# Create a CSV writer
-	writer = csv.writer(response)
+		# Create a CSV writer
+		writer = csv.writer(response)
 
-	# Designate the model
-	labs = Lab.objects.all().order_by('name')
+		# Designate the model
+		labs = Lab.objects.all().order_by('academic_division__name','name')
 
-	# Add column headings to the csv file
-	writer.writerow(['Lab Name', 'Academic Division', 'Associated Faculty', 'Contact', 'Description', 'Research Equipment', 'Website', 'Email', 'Associated Users', 'Address', 'Point of Contact/Manager'])
+		# Add column headings to the csv file
+		writer.writerow(['Lab Name', 'Academic Division', 'Associated Faculty', 'Contact', 'Description', 'Research Equipment', 'Website', 'Email', 'Associated Users', 'Address', 'Point of Contact/Manager'])
 
 
-	# Loop through and output
-	for lab in labs:
-		writer.writerow([lab.name, lab.academic_division, lab.faculty, lab.contact, lab.description, lab.research_equipment, lab.web, lab.email_address, lab.associated_users, lab.address, lab.poc_manager])
-	
-	return response
-
+		# Loop through and output
+		for lab in labs:
+			writer.writerow([lab.name, lab.academic_division, lab.faculty, lab.contact, lab.description, lab.research_equipment, lab.web, lab.email_address, lab.associated_users, lab.address, lab.poc_manager])
+		return response
+	else:
+		messages.success(request, ("You are not authorized to view this page."))
+		return redirect('home')
 
 
 # Delete a Academic Division
@@ -135,7 +140,18 @@ def search_acad_divs(request):
 		'acad_divs':acad_divs})
 	else:
 		return render(request,'labs/search_acad_divs.html')
+
+
+def search_labs(request):
+	if request.method == "POST":
+		searched_labs = request.POST.get('searched_labs')
+		labs = Lab.objects.filter(name__contains= searched_labs) | Lab.objects.filter(academic_division__name__contains= searched_labs) | Lab.objects.filter(description__contains=searched_labs)
 		
+		return render(request, 'labs/search_labs.html',
+		{'searched_labs':searched_labs,
+		'labs':labs})
+	else:
+		return render(request,'labs/search_acad_divs.html')		
 
 
 def show_acad_div(request, acad_div_id):

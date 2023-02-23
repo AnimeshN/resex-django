@@ -1,0 +1,30 @@
+{% extends "labs/base.html" %}
+
+{% block content %}
+	
+	{% if searched_labs %}
+		<h3>Search results for "{{searched_labs }}"</h3><br>
+		<table class="table table-hover table-bordered table-striped">
+		<tr>
+    		<th align="left">Lab</th>
+    		<th align="left" width="450">Department</th>
+		</tr>
+	{% for lab in labs %}
+	<tr>
+			<td>
+				<a href="{% url 'show-lab' lab.id %}">{{ lab }}</a> <br>
+			</td>
+			<td>
+				 <a href="{% url 'show-acad-div' lab.academic_division.id %}">{{ lab.academic_division }}</a>
+			</td>
+		</tr>
+		
+	{% endfor %}
+	</table>
+	<br><br>
+	<hr><br><br>
+	{% else %}
+		<h3> Nothing searched... </h3>
+	{% endif %}
+
+{% endblock %}
