@@ -28,7 +28,7 @@ class Lab_Form_Admin(ModelForm):
 	class Meta:
 		model = Lab
 		# fields = "__all__"
-		fields = ('name','academic_division','faculty', 'contact','web', 'email_address', 'associated_users', 'address', 'poc_manager', 'description','research_equipment')
+		fields = ('name','academic_division','faculty', 'contact','web', 'email_address', 'address', 'poc_manager', 'description','research_equipment', 'lab_image')
 		labels = {
 			'name': '',
 			'academic_division': 'Academic Division',
@@ -36,11 +36,12 @@ class Lab_Form_Admin(ModelForm):
 			'contact': '',
 			'web': '',
 			'email_address': '',
-			'associated_users':'Associated Users',
+			# 'associated_users':'Associated Users',
 			'address': '',
             'poc_manager': 'PoC',
 			'description': '',
 			'research_equipment': '',
+			'lab_image': 'Lab Image',
 		}
 
 		widgets = {
@@ -61,7 +62,7 @@ class Lab_Form(ModelForm):
 	class Meta:
 		model = Lab
 		# fields = "__all__"
-		fields = ('name','academic_division','faculty', 'contact','web', 'email_address',  'associated_users', 'address', 'description','research_equipment')
+		fields = ('name','academic_division','faculty', 'contact','web', 'email_address',  'address', 'description','research_equipment', 'lab_image')
 		labels = {
 			'name': '',
 			'academic_division': 'Academic Division',
@@ -69,10 +70,11 @@ class Lab_Form(ModelForm):
 			'contact': '',
 			'web': '',
 			'email_address': '',
-			'associated_users':'Associated Users',
+			# 'associated_users':'Associated Users',
 			'address': '',
 			'description': '',
 			'research_equipment': '',
+			'lab_image': 'Lab Image',
 		}
 
 		widgets = {

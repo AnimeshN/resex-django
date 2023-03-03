@@ -1,7 +1,7 @@
 {% extends "labs/base.html" %}
 
 {% block content %}
-
+{% if lab.approved %}
 <div class="card">
   <div class="card-header">
     <a href="{% url 'show-acad-div' lab.academic_division.id %}">{{ lab.academic_division }}</a>
@@ -9,22 +9,32 @@
   <div class="card-body">
     <h3 class="card-title">{{ lab }}</h3>
     <p class="card-text">
-    	
+    
+    {% if lab.lab_image %}
+    <center>
+    <img src="{{ lab.lab_image.url }}" class="img-fluid" alt="Lab Image" width="45%">
+    </center><br><br>
+    {% endif %}
+		
 		<strong>Associated Faculty:</strong> {{ lab.faculty }}<br>
 		<!-- <strong>Website:</strong> {{ lab.web }}<br> -->
 		<strong>Contact:</strong> {{ lab.contact }}<br>
 		<strong>Email:</strong> <a href="mailto:{{ lab.email_address }}">{{ lab.email_address }}</a><br>
 		<strong>Description:</strong> {{ lab.description }}<br>
 		<strong>Research Equipment:</strong> {{ lab.research_equipment }}<br>
-		<strong>People:</strong> 
+		<!-- <strong>People:</strong> 
 		{% for user in lab.associated_users.all %}
 		<br>{{ user }}
-		{% endfor %}<br>
+		{% endfor %}<br> -->
 		<strong>PoC:</strong> {{ lab.poc_manager }}<br>
 		<strong>PoC email:</strong> {{ lab.poc_manager.email }}<br>
 		<strong>Address:</strong> {{lab.address }}<br>
     </p>
     <a href="{{ lab.web }}" class="btn btn-primary">Visit Website</a>
+    
+    
+
+
   </div>
 
   {% if user.is_authenticated %}
@@ -39,5 +49,10 @@
   {% endif %}
 </div>
 <br><br>
-
+{% else %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+         	This lab is not yet approved please contact <a href="mailto:yashkadam@ee.iitb.ac.in">admin</a> to approve it...
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+{% endif %}
 {% endblock %}

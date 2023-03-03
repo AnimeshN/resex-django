@@ -81,7 +81,7 @@ def delete_lab(request,lab_id):
 
 def update_lab(request, lab_id):
 	lab = Lab.objects.get(pk=lab_id)
-	form = Lab_Form(request.POST or None, instance=lab)
+	form = Lab_Form(request.POST or None, request.FILES or None, instance=lab)
 	if form.is_valid():
 		form.save()
 		return redirect('list-labs')
@@ -96,7 +96,7 @@ def add_lab(request):
 	if request.method == "POST":
 		
 		if request.user.is_superuser:
-			form = Lab_Form_Admin(request.POST)
+			form = Lab_Form_Admin(request.POST, request.FILES)
 			if form.is_valid():
 				form.save()
 				return HttpResponseRedirect('/add_lab?submitted=True')

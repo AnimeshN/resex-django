@@ -33,14 +33,15 @@ class Lab(models.Model):
 	academic_division = models.ForeignKey(Academic_Division, blank=True, null=True, on_delete=models.SET_NULL)
 	faculty = models.CharField('Faculty associated', blank=True, max_length=256) 
 	contact = models.CharField('Contact number', max_length=256, blank=True)
-	#photo = models.ImageField()
 	description = models.TextField(blank=True)
 	research_equipment = models.TextField(blank=True)
 	web = models.URLField('Website address', blank=True)
 	email_address = models.EmailField('Email Address', max_length=128, blank=True)
-	associated_users = models.ManyToManyField(ResExUser, blank=True) 
+	# associated_users = models.ManyToManyField(ResExUser, blank=True) 
 	address = models.CharField('Address', max_length=256, blank=True)
 	poc_manager = models.ForeignKey(User, blank=False, null=True, on_delete=models.SET_NULL)
+	lab_image = models.ImageField(null=True, blank=True, upload_to="images/")
+	approved = models.BooleanField('Approved', default=False)
 
 	# Below part allows you to access DB from admin page
 	def __str__(self):

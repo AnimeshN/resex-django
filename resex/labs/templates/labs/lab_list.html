@@ -9,6 +9,7 @@
     		<th align="left" width="450">Department</th>
 		</tr>
 	{% for lab in labs %}
+	{% if lab.approved %}
 	<tr>
 			<td>
 				<a href="{% url 'show-lab' lab.id %}">{{ lab }}</a> <br>
@@ -17,7 +18,7 @@
 				 <a href="{% url 'show-acad-div' lab.academic_division.id %}">{{ lab.academic_division }}</a>
 			</td>
 		</tr>
-		
+	{% endif %}	
 	{% endfor %}
 	</table>
 	<br><br>
