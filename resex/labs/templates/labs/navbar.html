@@ -34,23 +34,30 @@
           </a>
           <ul class="dropdown-menu">
             {% if user.is_authenticated %}
-
-              <li><a class="dropdown-item" href="{% url 'my-labs' %}">My Labs</a></li>      
-              <li><a class="dropdown-item" href="{% url 'add-lab' %}">Add Lab</a></li>
-              {% if user.is_superuser %}
-            <li><a class="dropdown-item" href="{% url 'add-acad-div' %}">Add Academic Division</a></li>
-              <li><a class="dropdown-item" href="{% url 'lab-csv' %}">Download labs csv file</a></li>
-              {% endif %}
+              <li><a class="dropdown-item" href="{% url 'my-labs' %}">My Labs</a></li>
+              <li><a class="dropdown-item" href="{% url 'add-lab' %}">Add Lab</a></li>  
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             {% else %}
               <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
                <li><a class="dropdown-item" href="{% url 'register-user' %}">Register</a></li>
-
             {% endif %}
-          </ul>
+            </ul>
         </li>
 
+            {% if user.is_superuser %}
+            <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admin
+          </a>
+          <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'admin-approval' %}">Admin Approval</a></li>
+              <li><a class="dropdown-item" href="{% url 'add-lab' %}">Add Lab</a></li>
+              <li><a class="dropdown-item" href="{% url 'add-acad-div' %}">Add Academic Division</a></li>
+              <li><a class="dropdown-item" href="{% url 'lab-csv' %}">Download labs csv file</a></li>
+          </ul>
+        </li>
+            {% endif %}
 
       </ul>
       <form class="d-flex" method=POST action="{% url 'search-labs' %}">

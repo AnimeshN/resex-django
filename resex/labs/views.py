@@ -15,6 +15,30 @@ LABS_PER_PAGE = 10
 AD_PER_PAGE = 10
 
 # Create your views here.
+
+#Admin Lab Approval Page
+def admin_approval(request):
+	lab_list = Lab.objects.filter(approved=False).order_by('name')
+	if request.user.is_superuser:
+		if request.method == "POST":
+			id_list = request.POST.getlist('boxes')
+			id_list = list(map(int, id_list))
+			#Update the database
+			Lab.objects.filter(pk__in=id_list).update(approved=True)
+
+			messages.success(request, "Lab List approvals have been updated")
+			return redirect('list-labs')
+
+		else:
+			return render(request, 'labs/admin_approval.html',
+				{"lab_list": lab_list})
+	else:
+		messages.success(request, "You aren't authorized to view this page!")
+		return redirect('home')
+
+	return render(request, 'labs/admin_approval.html')
+
+
 def my_labs(request):
 	if request.user.is_authenticated:
 		if request.user.is_superuser:

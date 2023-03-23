@@ -1,23 +1,70 @@
 {% extends "labs/base.html" %}
 
 {% block content %}
-		<h1>Login</h1>
-		<br><br>
-		
-			<form action="" method=POST>
-				{% csrf_token %}
-				<form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Username</label>
-    <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" name="password">
-  </div>
 
-			<input type="submit" value="Submit" class="btn btn-secondary">
+<style>
+html,body { 
+	height: 100%; 
+}
+.global-container{
+  height:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+}
+
+
+.card-title{ font-weight:300; }
+
+.login-form{ 
+  width:330px;
+  margin:20px;
+}
+
+.sign-up{
+  text-align:center;
+  padding:20px 0 0;
+}
+
+.alert{
+  margin-bottom:-30px;
+  font-size: 13px;
+  margin-top:20px;
+}
+</style>
+
+
+<div class="global-container">
+	<div class="card login-form">
+	<div class="card-body">
+		<h3 class="card-title text-center">Log in to ResEx</h3>
+		<div class="card-text">
+			<!--
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
+			<form method ="post">
+				{% csrf_token %}
+				<!-- to error: add class "has-danger" -->
+				<div class="form-group">
+					<label for="exampleInputEmail1">Username</label>
+					<input type="text" name="username" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Password</label>
+					<input type="password" name="password" class="form-control form-control-sm" id="exampleInputPassword1">
+					<a href="#" style="float:right;font-size:12px;">Forgot password?</a><br>
+				</div>
+				<center>
+				<button type="submit" class="btn btn-primary btn-block" style="margin-top:20px;">Sign in</button>
 				
-				
+				<div class="sign-up">
+					Don't have an account? <a href="{% url 'register-user' %}">Register</a>
+				</div>
+			</center>
 			</form>
- <br><br>
+		</div>
+	</div>
+</div>
+</div>
+
 {% endblock %}

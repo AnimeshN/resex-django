@@ -4,9 +4,10 @@ from .models import ResExUser
 from .models import Lab
 from django.contrib.auth.models import Group
 
+
 # Register your models here.
 #admin.site.register(Academic_Division)
-admin.site.register(ResExUser)
+
 
 # Remove Groups
 # admin.site.unregister(Group)

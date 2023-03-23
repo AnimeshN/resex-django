@@ -23,4 +23,5 @@ urlpatterns = [
     path('lab_csv', views.lab_csv, name='lab-csv'),
     path('my_labs', views.my_labs, name='my-labs'),
     path('search_labs', views.search_labs, name='search-labs'),
+    path('admin_approval', views.admin_approval, name='admin-approval'),
 ]

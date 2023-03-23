@@ -22,7 +22,7 @@ class ResExUser(models.Model):
 	first_name = models.CharField(max_length=60)
 	last_name = models.CharField(max_length=50)
 	email = models.CharField('User Email', max_length=128)
-	
+	# is_email_verified = models.BooleanField(default=False)
 	# Below part allows you to access DB from admin page
 	def __str__(self):
 		return self.first_name + ' ' + self.last_name
