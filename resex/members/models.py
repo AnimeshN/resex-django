@@ -8,6 +8,7 @@ class Profile(models.Model):
 	auth_token = models.CharField(max_length=100)
 	is_verified = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
+	forgot_password_token = models.CharField(max_length=100, null = True)
 
 	def __str__(self):
 		return self.user.username

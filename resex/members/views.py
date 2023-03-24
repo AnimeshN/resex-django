@@ -15,6 +15,28 @@ from django.contrib.sites.shortcuts import get_current_site
 
 # @login_required(login_url="login")
 
+def IsValidPassword(password):
+	if(len(password) >= 8 and len(password) <= 20):
+		lowerCase =False
+		upperCase = False
+		num = False
+		special = False
+
+		for char in password:
+			if(char.isdigit()):
+				num = True
+			if(char.islower()):
+				lowerCase = True
+			if(char.isupper()):
+				upperCase = True
+			if(not char.isalnum()):
+				special = True
+
+		return lowerCase and upperCase and num and special 
+	else:
+		return False
+
+
 def register_user(request):
 	if request.method == "POST":
 		username = request.POST.get('username')
@@ -29,12 +51,16 @@ def register_user(request):
 				messages.success(request, "Passwords don't match.")
 				return redirect('register-user')
 
+			if not IsValidPassword(password1):
+				messages.success(request, "Password is not Valid. It must be between 8 and 20 characters in length and must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one non-alphanumeric character (e.g. a punctuation mark or other symbol).")
+				return redirect('register-user')
+
 			if User.objects.filter(username = username).first():
 				messages.success(request, 'Username is taken.')
 				return redirect('register-user')
 
 			if User.objects.filter(email = email).first():
-				messages.success(request, 'Email is taken.')
+				messages.success(request, 'Email is already registered.')
 				return redirect('register-user')
 
 			if "@iitb.ac.in" not in email:
@@ -124,6 +150,7 @@ def send_verification_mail(request, email, token):
 	recipient_list = [email]
 	send_mail(subject, message, email_from, recipient_list)
 
+
 def verify(request, auth_token):
 	try:
 		profile_obj = Profile.objects.filter(auth_token = auth_token).first()
@@ -138,9 +165,80 @@ def verify(request, auth_token):
 			messages.success(request, ("Your email has been verified. Please login."))
 			return redirect('login')
 		else:
-			return redirect('/error')
+			return redirect('error')
 	except Exception as e:
 		print(e)
 
+
 def error_page(request):
 	return render(request, 'authenticate/error.html')
+
+
+def forgot_password(request):
+	try:
+		if request.method == 'POST':
+			username = request.POST.get('username')
+			user_obj = User.objects.filter(username = username).first()
+			if user_obj is None:
+				messages.success(request, ("Username not found."))
+				return redirect('forgot-password')
+			
+			passwd_token = str(uuid.uuid4())
+			profile_obj = Profile.objects.filter(user = user_obj).first()
+			profile_obj.forgot_password_token = passwd_token
+			profile_obj.save()
+			send_psswd_reset_mail(request,user_obj.email, passwd_token)
+			messages.success(request, ("An email with further steps is sent to your registered email ID."))
+			return redirect('forgot-password')
+
+
+	except Exception as e:
+		print(e)
+	return render(request, 'authenticate/forgot_password.html')
+
+
+def send_psswd_reset_mail(request, email, token):
+	subject = "ResEx: Password reset link."
+	domain_name = get_current_site(request).domain
+	link = f'http://{domain_name}/members/change_password/{token}.'
+	message = f"Hi! Please click on this {link} to reset your password."
+	email_from = settings.EMAIL_HOST_USER
+	recipient_list = [email]
+	send_mail(subject, message, email_from, recipient_list)
+	return True
+
+def change_password(request, passwd_token):
+	context = {}
+
+	try:
+		profile_obj = Profile.objects.get(forgot_password_token = passwd_token)
+		if request.method == 'POST':
+			password1 = request.POST.get('password1')
+			password2 = request.POST.get('password2')
+			username = request.POST.get('username')
+			print(profile_obj)
+			if username is None:
+				messages.success(request, 'No username found.')
+				return redirect(f'/change-password/{token}/')
+			
+			if password1 != password2:
+				messages.success(request, "Passwords don't match.")
+				return redirect(f'/change-password/{token}/')
+
+			if not IsValidPassword(password1):
+				messages.success(request, "Password is not Valid. It must be between 8 and 20 characters in length and must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one non-alphanumeric character (e.g. a punctuation mark or other symbol).")
+				return redirect(f'/change-password/{token}/')
+
+			
+			user_obj = User.objects.filter(username = profile_obj).first()
+			print(user_obj)
+			user_obj.set_password(password1)
+			user_obj.save()
+			return redirect('login')
+
+		context = {'username' : profile_obj.user}
+
+
+	except Exception as e:
+		print(e)
+	return render(request, 'authenticate/change_password.html', context)
