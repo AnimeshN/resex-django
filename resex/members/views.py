@@ -118,7 +118,6 @@ def login_user(request):
 			messages.success(request, ('We have sent an email to verify your email address. Please check your mail for further steps.'))
 			return redirect('login')
 
-
 		user = authenticate(request, username=username, password=password)
 		if user is None:
 			messages.success(request, ("Wrong Password. Try again"))
@@ -234,6 +233,7 @@ def change_password(request, passwd_token):
 			print(user_obj)
 			user_obj.set_password(password1)
 			user_obj.save()
+			messages.success(request, "Password reset successfully. Please try logging in now.")
 			return redirect('login')
 
 		context = {'username' : profile_obj.user}
