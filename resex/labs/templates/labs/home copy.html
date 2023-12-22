@@ -1,14 +1,23 @@
 {% extends "labs/base.html" %}
 
 {% block content %}
-<!-- Header -->
+<!DOCTYPE html>
+<html lang="en">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Roboto", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+</head>
+<body>
 
-<div class=" w3-black w3-center w3-padding-64" style="padding:0px 0px">
+<!-- Header -->
+<header class="w3-container w3-black w3-center w3-padding-64" style="padding:128px 16px">
   
   <h1 class="w3-margin w3-jumbo">ResEx</h1>
   <p class="w3-xlarge">Register now to add the data of your lab.</p>
   <button class="w3-button w3-red w3-padding-large w3-large w3-margin-top" onClick="window.location.href='{% url 'register-user' %}';">Get Started</button>
-</div>
+</header>
 
 <!-- First Grid -->
 <div class="w3-row-padding w3-padding-64 w3-container w3-black">
@@ -29,5 +38,10 @@
     </div>
   </div>
 </div>
-	<!-- <center>Copyright (c) {{ current_year }}</center> -->
+
+</body>
+</html>
+
+	<br><br><br>
+	<center>Copyright (c) {{ current_year }}</center>
 {% endblock %}
