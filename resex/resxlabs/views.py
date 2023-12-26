@@ -16,9 +16,27 @@ def all_labs(request):
 	labs = Lab.objects.all().order_by('academic_division__name','name')
 
 	if is_ajax(request) and request.method == 'POST':
-		data = request.POST.get('lab_id')
-		print(data)
-		return JsonResponse({"message": "Data received successfully!"})
+		lab_id = request.POST.get('lab_id')
+		lab = Lab.objects.get(pk=lab_id)
+		acad_div = Academic_Division.objects.get(pk=lab.academic_division.id)
+		image_url = lab.lab_image.url
+
+		lab_data = {
+            'name': lab.name,
+            'academic_division': acad_div.name,
+            'faculty': lab.faculty,
+            'contact': lab.contact,
+            'description': lab.description,
+            'web': lab.web,
+            'email_address': lab.email_address,
+            'address': lab.address,
+            'poc_manager': lab.poc_manager.username,
+            'poc_manager_email': lab.poc_manager.email,
+            'lab_image': image_url,
+            'research_equipment': lab.research_equipment,
+        }
+		print(lab_data)
+		return JsonResponse(lab_data)
 	
 	# elif request.method == "POST":
 	# 	searched_labs = request.POST.get('searched_labs')

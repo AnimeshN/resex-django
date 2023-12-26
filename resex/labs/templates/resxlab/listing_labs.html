@@ -147,20 +147,24 @@
 
     .toast {
         visibility: hidden;
-        min-width: 80%;
+        min-width: 50%;
         min-height: 60%;
         /* margin-left: -125px; */
-        background-color: #333;
-        color: #fff;
+        background-color: rgb(236, 244, 247);
         text-align: center;
-        border-radius: 2px;
-        padding: 16px;
+        border-radius: 10px;
         position: fixed;
         z-index: 1;
-        left: 10%;
+        left: 25%;
         bottom: 25%;
         font-size: 17px;
         margin-right: 50%;
+
+        flex-basis: calc(25% - 10px);
+        border: 1px solid #ddd;
+        /* padding: 10px; */
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        /* margin-bottom: 10px; */
     }
 
     /* Show the toast when adding the "show" class */
@@ -194,7 +198,7 @@
         position: absolute;
         top: 0;
         right: 10px;
-        color: #fff;
+        color: #000000;
         font-size: 25px;
         cursor: pointer;
     }
@@ -203,6 +207,105 @@
         color: #bbb;
     }
 
+    .toast-content{
+        display:flex;
+        height: 100%;
+        flex-wrap: wrap;
+        /* margin-bottom: 10px; */
+        flex-direction: column;
+    }
+    .toast-top{
+        flex: 1;
+        display: flex;
+        border-bottom: solid;
+        border-width: 1px;
+        border-color: gray;
+
+
+    }
+    .toast-bottom{
+        flex:1;
+    }
+    .toast-image-container{
+        width: 100%;
+        height: auto;
+        flex:6;
+        border-right: solid;
+        border-width: 1px;
+        border-color: gray;
+    }
+    .toast-img{
+        width: 100%;
+        height: auto;
+
+    }
+    .toast-info{
+        flex:4;
+    }
+
+    .toast-info-row{
+        display:flex;
+        flex-direction: column;
+        margin: 50px;
+        border-bottom: solid;
+        border-width: 1px;
+        border-color: gray;
+        padding-bottom: 20px;;
+        overflow: hidden; /* Add scroll or auto if you want scrollbars instead */
+        word-wrap: break-word; /* Break long words */
+        overflow-wrap: break-word; /* Ensure overflow is wrapped */
+        white-space: normal; 
+
+    }
+
+    .toast-icon-text{
+        display: flex;
+        gap:10px;
+        margin: 10px;
+        font-size: large;
+    }
+
+    .toast-lab-name{
+        font-size: 25x;
+        font-weight: bold;
+    }
+
+    .toast-info-column{
+        display:flex;
+        flex-direction: row;
+        margin: 20px;
+        gap:10px;
+        justify-content: space-between;
+        margin-top: 60px;
+
+    }
+
+    /* .toast-person{
+        background-color: red;
+    } */
+    .toast-person-type{
+        font-weight: bold;
+        display: flex;
+        justify-content: left;
+    }
+    .toast-person-container{
+        display: flex;
+        gap:1px;
+    }
+    .toast-person-icon{
+        /* margin-top: 2px; */
+        margin-left: 10px;
+    }
+
+    .toast-bottom{
+        /* background-color: lightgray; */
+        text-align: justify;
+        margin: 10px;
+    }
+
+  
+    
+    
     </style>
     <button id="toggleButton">Filter</button>
 
@@ -224,7 +327,7 @@
                 <!-- Add more options as needed -->
             </select>
         </div>
-
+ 
         <!-- Right Panel -->
         <div class="right-panel">
             <!-- Row of Cards -->
@@ -294,11 +397,81 @@
 
       <div id="toast" class="toast">
         <div id="toast-html">
-            This is a toast message!
+            <!-- <div class="toast-content">
+                <div class="toast-top">
+                    <div class="toast-image-container">
+                        <img class="toast-img" src="{% static 'images/dummy_image.jpeg' %}" alt="Image 1">
+
+                    </div>
+                    <div class="toast-info">
+                        <div class="toast-info-row">
+
+                            <div class="toast-icon-text">
+                                <img width="auto" height="25px" src="{% static 'images/lab-icon.png' %}" alt="Image 1">
+                                <div class="toast-lab-name">Bacterial Pathogenesis</div>
+                            </div>
+                            <div class="toast-icon-text">
+                                <img width="auto" height="25px" src="{% static 'images/dep-icon.png' %}" alt="Image 1">
+                                <div class="toast-department-name">Bioscience and engineering</div>
+                            </div>
+                            <div class="toast-icon-text">
+                                <img width="auto" height="25px" src="{% static 'images/loc-icon.png' %}" alt="Image 1">
+                                <div class="toast-lab-location">Room No. 201, BSBE Building</div>
+                            </div>
+                            <div class="toast-icon-text">
+                                <img width="auto" height="25px" src="{% static 'images/web-icon.png' %}" alt="Image 1">
+                                <div class="toast-lab-website"><a href="https://www.bio.iitb.ac.in/~anirban/">https://www.bio.iitb.ac.in/~anirban/</a></div>
+                            </div>
+                        </div>
+                        <div class="toast-info-column">
+                                <div class="toast-person">
+                                    <div class="toast-person-type">Associated Faculty</div>
+                                    <div class="toast-person-container">
+                                        <div class="toast-person-icon">
+                                            <img margin-top="5px" width="auto" height="15px" src="{% static 'images/contact-icon.png' %}" alt="Image 1">
+                                        </div>
+                                        <div>Name and Contact</div>
+                                    </div>
+
+                                    <div class="toast-person-container">
+                                        <div class="toast-person-icon">
+                                            <img margin-top="5px" width="auto" height="15px" src="{% static 'images/email-icon.png' %}" alt="Image 1">
+                                        </div>
+                                        <div>Email</div>
+                                    </div>
+                                </div>
+                                <div class="toast-person">
+                                    <div class="toast-person-type">PoC</div>
+                                    <div class="toast-person-container">
+                                        <div class="toast-person-icon">
+                                            <img margin-top="5px" width="auto" height="15px" src="{% static 'images/contact-icon.png' %}" alt="Image 1">
+                                        </div>
+                                        <div>Name and Contact</div>
+                                    </div>
+
+                                    <div class="toast-person-container">
+                                        <div class="toast-person-icon">
+                                            <img margin-top="5px" width="auto" height="15px" src="{% static 'images/email-icon.png' %}" alt="Image 1">
+                                        </div>
+                                        <div>Email</div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toast-bottom">
+                    The primary aim of our lab is to understand how the interaction between Streptococcus pneumoniae and the host leads to a productive infection. Streptococcus pneumoniae is the leading cause of invasive bacterial infections such as pneumonia, sepsis, and meningitis in children and adults. We strive to decipher the mechanisms of pneumococcal pathogenesis, its interaction with the host and identify/characterize its virulence genes. Conversely, we also study host antimicrobial mechanisms that keep Streptococcus pneumoniae infection in check. The research area comprises multiple disciplines like cell biology, molecular biology, microbiology, etc. Our long-term goal is to develop novel therapeutic approaches or serotype-independent vaccine preparation for pneumococcus that would reduce its disease burden.
+                </div>
+ 
+            </div> -->
         </div>
         <span id="closeToast" class="close">&times;</span>
     </div>
+    
      <script>
+
+        // var toastElement = document.getElementById('toast');
+        // toastElement.classList.add('show');
         document.getElementById('toggleButton').addEventListener('click', function() {
             var leftPanel = document.getElementById('leftPanel');
             leftPanel.style.display = leftPanel.style.display === 'block' ? 'none' : 'block';
@@ -337,9 +510,91 @@
                     'lab_id': id,
                     'csrfmiddlewaretoken': getCSRFToken()
                 },
-                success: function(response) {
-                    console.log(response);
-                    toastHTML.innerHTML = response.message;
+                success: function(lab_info) {
+                    console.log(lab_info);
+                    toastHTML.innerHTML = 
+                    `
+                    <div class="toast-content">
+                        <div class="toast-top">
+                            <div class="toast-image-container">
+                            <img class="toast-img" src="{% static 'images/dummy_image.jpeg' %}" alt="Image 1">
+
+                                <!-- <img class="toast-img" src="${lab_info.lab_image}" alt="Image 1"> -->
+
+                            </div>
+                            <div class="toast-info">
+                                <div class="toast-info-row">
+
+                                    <div class="toast-icon-text">
+                                        <img width="auto" height="25px" src="{% static 'images/lab-icon.png' %}" alt="Image 1">
+                                        <div class="toast-lab-name">${lab_info.name}</div>
+                                    </div>
+                                    <div class="toast-icon-text">
+                                        <img width="auto" height="25px" src="{% static 'images/dep-icon.png' %}" alt="Image 1">
+                                        <div class="toast-department-name">${lab_info.academic_division}</div>
+                                    </div>
+                                    <div class="toast-icon-text">
+                                        <img width="auto" height="25px" src="{% static 'images/loc-icon.png' %}" alt="Image 1">
+                                        <div class="toast-lab-location">${lab_info.address}</div>
+                                    </div>
+                                    <div class="toast-icon-text">
+                                        <img width="auto" height="25px" src="{% static 'images/web-icon.png' %}" alt="Image 1">
+                                        <div class="toast-lab-website"><a href="${lab_info.web}">${lab_info.web}</a></div>
+                                    </div>
+                                    <div class="toast-icon-text">
+                                        <div class="toast-lab-location">${lab_info.research_equipment}</div>
+                                    </div>
+                                </div>
+                                <div class="toast-info-column">
+                                        <div class="toast-person">
+                                            <div class="toast-person-type">Associated Faculty</div>
+                                            <div class="toast-person-container">
+                                                <div class="toast-person-icon">
+                                                    <img margin-top="5px" width="auto" height="15px" src="{% static 'images/contact-icon.png' %}" alt="Image 1">
+                                                </div>
+                                                <div>${lab_info.faculty}</div>
+                                            </div>
+
+                                            <div class="toast-person-container">
+                                                <div class="toast-person-icon">
+                                                    <img margin-top="5px" width="auto" height="15px" src="{% static 'images/phone-icon.png' %}" alt="Image 1">
+                                                </div>
+                                                <div>${lab_info.contact}</div>
+                                            </div>
+
+
+                                            <div class="toast-person-container">
+                                                <div class="toast-person-icon">
+                                                    <img margin-top="5px" width="auto" height="15px" src="{% static 'images/email-icon.png' %}" alt="Image 1">
+                                                </div>
+                                                <div>${lab_info.email_address}</div>
+                                            </div>
+                                        </div>
+                                        <div class="toast-person">
+                                            <div class="toast-person-type">PoC</div>
+                                            <div class="toast-person-container">
+                                                <div class="toast-person-icon">
+                                                    <img margin-top="5px" width="auto" height="15px" src="{% static 'images/contact-icon.png' %}" alt="Image 1">
+                                                </div>
+                                                <div>${lab_info.poc_manager}</div>
+                                            </div>
+
+                                            <div class="toast-person-container">
+                                                <div class="toast-person-icon">
+                                                    <img margin-top="5px" width="auto" height="15px" src="{% static 'images/email-icon.png' %}" alt="Image 1">
+                                                </div>
+                                                <div>${lab_info.poc_manager_email}</div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="toast-bottom">
+                            ${lab_info.description}
+                        </div>
+        
+                    </div>
+                    `;
 
                 },
                 error: function(xhr, errmsg, err) {
@@ -357,5 +612,58 @@
 
     </script>
 
+    <script>
+        $(function(){
+            var csrftoken = getCookie('csrftoken');
+
+            $.ajaxSetup({
+                            beforeSend: function(xhr, settings) {
+                                if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                                    // Send the token to same-origin, relative URLs only.
+                                    // Send the token only if the method warrants CSRF protection
+                                    // Using the CSRFToken value acquired earlier
+                                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                                }
+                            }
+            });
+
+        function sameOrigin(url) {
+            // test that a given url is a same-origin URL
+            // url could be relative or scheme relative or absolute
+            var host = document.location.host; // host + port
+            var protocol = document.location.protocol;
+            var sr_origin = '//' + host;
+            var origin = protocol + sr_origin;
+            // Allow absolute or scheme relative URLs to same origin
+            return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                // or any other URL that isn't scheme relative or absolute i.e relative.
+                !(/^(\/\/|http:|https:).*/.test(url));
+        }
+
+        // usando jQuery
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+
+            function csrfSafeMethod(method) {
+                // estos métodos no requieren CSRF
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+        });
+    </script>
 
 {% endblock %}
