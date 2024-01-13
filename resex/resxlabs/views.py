@@ -38,12 +38,12 @@ def all_labs(request):
 		print(lab_data)
 		return JsonResponse(lab_data)
 	
-	# elif request.method == "POST":
-	# 	searched_labs = request.POST.get('searched_labs')
-	# 	if searched_labs != "":
-	# 		labs = Lab.objects.filter(name__contains= searched_labs) | Lab.objects.filter(academic_division__name__contains= searched_labs) | Lab.objects.filter(description__contains=searched_labs)
-	# 	else:
-	# 		labs = Lab.objects.all().order_by('academic_division__name','name')
+	elif request.method == "POST":
+		searched_labs = request.POST.get('searched_labs')
+		if searched_labs != "":
+			labs = Lab.objects.filter(name__contains= searched_labs) | Lab.objects.filter(academic_division__name__contains= searched_labs) | Lab.objects.filter(description__contains=searched_labs)
+		else:
+			labs = Lab.objects.all().order_by('academic_division__name','name')
 	# Setup pagination
 	pag = Paginator(labs, LABS_PER_PAGE)
 	page =request.GET.get('page')
